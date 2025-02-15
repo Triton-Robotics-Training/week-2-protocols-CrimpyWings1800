@@ -35,15 +35,51 @@ void putc_hex(char c){
 
 //puts a character into the output buffer as binary
 //remember that nothing will show until you print a newline.
-void putc_bin(char c){
+void putc_bin(char c) {
     for(int i = 0; i < 8; i ++){
         printf("%c", (c>>(7-i) & 1) ? '1' : '0');
     }
-    
 }
 
-int main(void)
-{
+char move_0(char c) {
+    char zeroth_bit = c & 0x01; //isolating the 0 bit
+    zeroth_bit = zeroth_bit << 3; // shifting by 3
+    return c | zeroth_bit;
+}
+
+char move_21(char c) {
+    char second_first_bits = ~c;
+    second_first_bits = second_first_bits & 0x06;
+    second_first_bits = second_first_bits << 5;
+    return c | second_first_bits;
+}
+
+char move_3(char c) {
+    char third_bit = ~c;
+    third_bit = third_bit & 0x08;
+    third_bit = third_bit << 1;
+    return c | third_bit;
+}
+
+int main(void) {
+    
+    char x = 0x01;
+    putc_bin(x);
+    putc('\n');
+    
+    //char moved_zeroth = move_0(x);
+    //putc_bin(moved_zeroth);
+    //putc('\n');
+    
+    //char moved_second_first = move_21(x);
+    
+    //char moved_third = move_3(x);
+    //putc_bin(moved_third);
+    //putc('\n');
+    
+    //putc_bin(moved_second_first | moved_third | moved_zeroth);
+    //putc('\n');
+
     //CODE GOES HERE 
 
     putc('\n');
