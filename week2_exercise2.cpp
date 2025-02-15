@@ -23,13 +23,13 @@ static unsigned char inputString[] =
 
 //puts a character into the output buffer
 //remember that nothing will show until you print a newline.
-void putc(char c){
+void putc(char c) {
     printf("%c", c);
 }
 
 //puts a character into the output buffer as hexadecimal
 //remember that nothing will show until you print a newline.
-void putc_hex(char c){
+void putc_hex(char c) {
     printf("0x%2x", (unsigned char)c);
 }
 
@@ -48,22 +48,34 @@ char move_0(char c) {
 }
 
 char move_21(char c) {
-    char second_first_bits = ~c;
-    second_first_bits = second_first_bits & 0x06;
-    second_first_bits = second_first_bits << 5;
+    char second_first_bits = ~c; //inverting all bits
+    second_first_bits = second_first_bits & 0x06;// isolating second and first bits
+    second_first_bits = second_first_bits << 5; //shifting by 5
     return c | second_first_bits;
 }
 
 char move_3(char c) {
-    char third_bit = ~c;
-    third_bit = third_bit & 0x08;
-    third_bit = third_bit << 1;
+    char third_bit = ~c; //inverting all bits
+    third_bit = third_bit & 0x08; //isolating third bit
+    third_bit = third_bit << 1; //hsifting by one
     return c | third_bit;
+}
+
+char move_4(char c) {
+    char fourth_bit = c & 0x10; //isolating fourth bit
+    fourth_bit = fourth_bit << 1; //shifting by 1
+    return c | fourth_bit;
+}
+
+char move_765(char c) {
+    char seventh_sixth_fifth_bit = c & 0xe0;
+    seventh_sixth_fifth_bit = seventh_sixth_fifth_bit << 3;
+    return c | seventh_sixth_fifth_bit;
 }
 
 int main(void) {
     
-    char x = 0x01;
+    char x = 0x11;
     putc_bin(x);
     putc('\n');
     
@@ -77,7 +89,15 @@ int main(void) {
     //putc_bin(moved_third);
     //putc('\n');
     
-    //putc_bin(moved_second_first | moved_third | moved_zeroth);
+    //char moved_fourth = move_4(x);
+    //putc_bin(moved_fourth);
+    //putc('\n');
+    
+    char moved_front = move_765(x);
+    putc_bin(moved_front);
+    putc('\n');
+    
+    //putc_bin(moved_fourth | moved_zeroth);
     //putc('\n');
 
     //CODE GOES HERE 
