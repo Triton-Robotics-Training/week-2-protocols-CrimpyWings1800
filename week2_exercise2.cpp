@@ -42,64 +42,58 @@ void putc_bin(char c) {
 }
 
 char move_0(char c) {
-    char zeroth_bit = c & 0x01; //isolating the 0 bit
-    zeroth_bit = zeroth_bit << 3; // shifting by 3
-    return c | zeroth_bit;
+    char zeroth_bit = c & 0b00000001; //isolating the 0 bit
+    char shifted_bits = zeroth_bit << 3; // shifting by 3
+    return 0b00001000 & shifted_bits;
 }
 
 char move_21(char c) {
-    char second_first_bits = ~c; //inverting all bits
-    second_first_bits = second_first_bits & 0x06;// isolating second and first bits
-    second_first_bits = second_first_bits << 5; //shifting by 5
-    return c | second_first_bits;
+    char inverted_bits = ~c & 0b00000110; //inverting and isolating
+    char shifted_bits = inverted_bits << 5; // shifting by 6
+    //char cleared_c = c & 0b00111111;
+    return 0b11000000 & shifted_bits;
 }
 
 char move_3(char c) {
-    char third_bit = ~c; //inverting all bits
-    third_bit = third_bit & 0x08; //isolating third bit
-    third_bit = third_bit << 1; //hsifting by one
-    return c | third_bit;
+    char inverted_bit = ~c &0b00001000; // invertign and isolating
+    char shifted_bit = inverted_bit << 1; //shifting by 1
+    return 0b00010000 & shifted_bit;
 }
 
 char move_4(char c) {
-    char fourth_bit = c & 0x10; //isolating fourth bit
-    fourth_bit = fourth_bit << 1; //shifting by 1
-    return c | fourth_bit;
+    char fourth_bit = c & 0b00010000; //isolating fourth bit
+    char shifted_bit = fourth_bit << 1; // shifting by 1
+    return 0b00100000 & shifted_bit;
 }
 
 char move_765(char c) {
-    char seventh_sixth_fifth_bit = c & 0xe0;
-    seventh_sixth_fifth_bit = seventh_sixth_fifth_bit << 3;
-    return c | seventh_sixth_fifth_bit;
+    char seventh_sixth_fifth_bits = c & 0b11100000; //isolating front three
+    char shifted_bits = seventh_sixth_fifth_bits >> 5; //shifting to the back
+
+    char cleared_bits = shifted_bits & 0b00000111; //"saving" the last three
+
+    return cleared_bits;
 }
 
 int main(void) {
     
-    char x = 0x11;
+    char x = 0b10000100;
+    //int size = sizeof(inputString) / sizeof(inputString[0]);
+    //char outputString[size];
     putc_bin(x);
     putc('\n');
     
-    //char moved_zeroth = move_0(x);
-    //putc_bin(moved_zeroth);
+    char bit0 = move_0(x);
+    char bits21 = move_21(x);
+    //putc_bin(bits21);
     //putc('\n');
+    char bit3 = move_3(x);
+    char bit4 = move_4(x);
+    char bits765 = move_765(x);
     
-    //char moved_second_first = move_21(x);
-    
-    //char moved_third = move_3(x);
-    //putc_bin(moved_third);
-    //putc('\n');
-    
-    //char moved_fourth = move_4(x);
-    //putc_bin(moved_fourth);
-    //putc('\n');
-    
-    char moved_front = move_765(x);
-    putc_bin(moved_front);
+    putc_bin(bit0 | bits21 | bit3 | bit4 | bits765);
     putc('\n');
     
-    //putc_bin(moved_fourth | moved_zeroth);
-    //putc('\n');
-
     //CODE GOES HERE 
 
     putc('\n');
