@@ -77,24 +77,23 @@ char move_765(char c) {
 
 int main(void) {
     
-    char x = 0b10000100;
-    //int size = sizeof(inputString) / sizeof(inputString[0]);
-    //char outputString[size];
-    putc_bin(x);
-    putc('\n');
+    char x = 0b10101010;
+    int size = sizeof(inputString) / sizeof(inputString[0]);
+    char outputString[size];
+    char bit0;
+    char bits21;
+    char bit3;
+    char bit4;
+    char bits765;
     
-    char bit0 = move_0(x);
-    char bits21 = move_21(x);
-    //putc_bin(bits21);
-    //putc('\n');
-    char bit3 = move_3(x);
-    char bit4 = move_4(x);
-    char bits765 = move_765(x);
-    
-    putc_bin(bit0 | bits21 | bit3 | bit4 | bits765);
-    putc('\n');
-    
-    //CODE GOES HERE 
-
+    for (int i = 0; i < size; i++) {
+        bit0 = move_0(inputString[i]);
+        bits21 = move_21(inputString[i]);
+        bit3 = move_3(inputString[i]);
+        bit4 = move_4(inputString[i]);
+        bits765 = move_765(inputString[i]);
+        outputString[i] = bit0 | bits21 | bit3 | bit4 | bits765;
+        putc(outputString[i]);
+    }
     putc('\n');
 }
