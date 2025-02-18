@@ -69,18 +69,26 @@ int main() {
     uint8_t data_send[8] = {0,0,0,0,0,0,0,0};
     short len_send = 8;
     short id_send = 0x1FF;
+    //data_send[0] holds the address?
     
     //convert angle to binary
     uint16_t binary_angle[16];
+    //data_send[1] holds the first byte of angle
+    //data_send[2] holds the second byte of angle
     
     //convert velocity to binary
-     binary_velocity[16];
+    uint16_t binary_velocity[16];
+    //data_send[3] holds the first byte of velocity
+    //data_send[4] holds the second byte of velocity
     
     //convert torque to binary
     int binary_torque[16];
+    //data_send[5] holds the first byte of torque
+    //data_send[6] holds the second byte of torque
     
     //convert temperature to binary
     int binary_temp[8];
+    //data_send[7] holds the temperature byte
     
     //data_send[0]; // this holds first half of the angle packet
     //data_send[1]; // this send the second half of the angle packet
