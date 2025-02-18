@@ -76,24 +76,22 @@ char move_765(char c) {
 }
 
 int main(void) {
-    
-    char x = 0b10101010;
     int size = sizeof(inputString) / sizeof(inputString[0]);
-    char outputString[size];
-    char bit0;
-    char bits21;
-    char bit3;
-    char bit4;
-    char bits765;
+    char outputString[size]; // creating array to store charcters
+    char bit0; //holds decrypted 0th bit
+    char bits21; // holds decrypted 1st and 2nd bits
+    char bit3; // holds decrypted 3rd bit
+    char bit4; // holds decrypted 4th bit
+    char bits765; //holds decrypted front bits
     
     for (int i = 0; i < size; i++) {
-        bit0 = move_0(inputString[i]);
+        bit0 = move_0(inputString[i]); //decrypting each character
         bits21 = move_21(inputString[i]);
         bit3 = move_3(inputString[i]);
         bit4 = move_4(inputString[i]);
         bits765 = move_765(inputString[i]);
-        outputString[i] = bit0 | bits21 | bit3 | bit4 | bits765;
-        putc(outputString[i]);
+        outputString[i] = bit0 | bits21 | bit3 | bit4 | bits765; //combining all of them together
+        putc(outputString[i]); // printing result
     }
     putc('\n');
 }
