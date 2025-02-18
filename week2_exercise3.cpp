@@ -52,7 +52,7 @@ public:
 //TOUCH NOTHING ABOVE THIS
 
 int main() {
-    srand(2); //MODIFY THIS TO CHANGE THE READ PACKET TEST CASE
+    srand(0); //MODIFY THIS TO CHANGE THE READ PACKET TEST CASE
     CAN canbus; //usually this has parameters, but since this isn't real and we're running this on a standard compiler, it doesn't
     
     int16_t angle = 0;
@@ -70,6 +70,24 @@ int main() {
     short len_send = 8;
     short id_send = 0x1FF;
     
+    //convert angle to binary
+    uint16_t binary_angle[16];
+    
+    //convert velocity to binary
+     binary_velocity[16];
+    
+    //convert torque to binary
+    int binary_torque[16];
+    
+    //convert temperature to binary
+    int binary_temp[8];
+    
+    //data_send[0]; // this holds first half of the angle packet
+    //data_send[1]; // this send the second half of the angle packet
+    //data_send[2]; // holds the first half of the velocity packet
+    //data_send[3]; // holds the second half of the velocity packet
+    
+
     uint8_t data_recv[8] = {0,0,0,0,0,0,0,0};
     short len_recv;
     short id_recv;
