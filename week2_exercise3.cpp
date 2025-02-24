@@ -100,6 +100,19 @@ int main() {
     
     //We pass in an array (data_recv) and it is filled in the can read function, as well as the id we recieve from and the length of the packet.
     canbus.readPacket(&id_recv, data_recv, &len_recv);
+
+    uint16_t decrypted_angle = data_recv[0] << 8; //first angle byte
+    decrypted_angle += data_recv[1]; //second angle byte
+    
+    int16_t decrypted_velocity = data_recv[2] << 8; //first velocity byte
+    decrypted_velocity += data_recv[3]; //second velocity byte
+    
+    uint16_t decrypted_torque = data_recv[4] << 8; //first torque byte
+    decrypted_torque += data_recv[5]; //second torque byte
+    
+    uint8_t decrypted_temperature = data_recv[6]; //only temperature byte
+    
+    printf("Decoded - angle: %d | velocity: %d | torque: %d | temperature: %d \n", decrypted_angle, decrypted_velocity, decrypted_torque, decrypted_temperature); //printing values
     
     //TODO: DECODE THE DATA RECIEVED BY THE MOTOR, YOU SHOULD GET DIFFERENT DATA DEPENDING ON SRAND
     // srand(0): 1383, -5114, 27, 85
