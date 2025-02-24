@@ -55,10 +55,10 @@ int main() {
     srand(0); //MODIFY THIS TO CHANGE THE READ PACKET TEST CASE
     CAN canbus; //usually this has parameters, but since this isn't real and we're running this on a standard compiler, it doesn't
     
-    int16_t angle = 0;
-    int16_t velocity = 0;
-    int16_t torque = 0;
-    int8_t temperature = 0; 
+    int16_t angle = 8000;
+    int16_t velocity = 400;
+    int16_t torque = -10000;
+    int8_t temperature = 200; 
     //test cases: angle, velocity, torque, temperature
     //test case 1: 1300, 2140, 382, 10
     //test case 2: 8000, -5000, -800, 90
@@ -69,33 +69,27 @@ int main() {
     uint8_t data_send[8] = {0,0,0,0,0,0,0,0};
     short len_send = 8;
     short id_send = 0x1FF;
-    //data_send[0] holds the address?
     
-    //convert angle to binary
-    uint16_t binary_angle[16];
-    //data_send[1] holds the first byte of angle
-    //data_send[2] holds the second byte of angle
+    //encrypting angle
+    uint8_t angle_byte1 = (uint8_t)(angle >> 8); //isolating first angle byte
+    uint8_t angle_byte2 = (uint8_t)angle; //isolating second angle byte
+    data_send[0] = angle_byte1; //passing into datasend
+    data_send[1] = angle_byte2; 
     
-    //convert velocity to binary
-    uint16_t binary_velocity[16];
-    //data_send[3] holds the first byte of velocity
-    //data_send[4] holds the second byte of velocity
+    //encrytping velocity
+    uint8_t velocity_byte1 = (uint8_t)(velocity >> 8); //isolating first velocity byte
+    uint8_t velocity_byte2 = (uint8_t)velocity; //isolating second velocity byte
+    data_send[2] = velocity_byte1; //pasing into datasend
+    data_send[3] = velocity_byte2;
     
-    //convert torque to binary
-    int binary_torque[16];
-    //data_send[5] holds the first byte of torque
-    //data_send[6] holds the second byte of torque
+    //encrypting torque
+    uint8_t torque_byte1 = (uint8_t)(torque >> 8); //isolating first torque byte
+    uint8_t torque_byte2 = (uint8_t)torque; //isolating second torque byte
+    data_send[4] = torque_byte1; // passing into datasend
+    data_send[5] = torque_byte2;
     
-    //convert temperature to binary
-    int binary_temp[8];
-    //data_send[7] holds the temperature byte
+    data_send[6] = temperature; //no need to encrypt
     
-    //data_send[0]; // this holds first half of the angle packet
-    //data_send[1]; // this send the second half of the angle packet
-    //data_send[2]; // holds the first half of the velocity packet
-    //data_send[3]; // holds the second half of the velocity packet
-    
-
     uint8_t data_recv[8] = {0,0,0,0,0,0,0,0};
     short len_recv;
     short id_recv;
